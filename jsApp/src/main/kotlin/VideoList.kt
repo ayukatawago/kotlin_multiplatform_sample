@@ -1,3 +1,4 @@
+import com.example.shared.video.Video
 import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.p

@@ -1,5 +1,7 @@
 import com.example.shared.Platform
-import kotlinx.browser.window
+import com.example.shared.video.Video
+import com.example.shared.video.VideoRepository
+import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.*
 import react.*
 import react.dom.div
@@ -8,6 +10,8 @@ import react.dom.h3
 
 @JsExport
 class App : RComponent<RProps, AppState>() {
+    private val repository = VideoRepository()
+
     override fun AppState.init() {
         unwatchedVideos = listOf()
         watchedVideos = listOf()
@@ -73,20 +77,11 @@ class App : RComponent<RProps, AppState>() {
     }
 
     private suspend fun fetchVideos(): List<Video> = coroutineScope {
-        (1..25).map { id ->
-            async {
-                fetchVideo(id)
-            }
-        }.awaitAll()
-            .filterNotNull()
+        repository.fetchVideos(VIDEO_COUNT)
     }
 
-    @Suppress("UNCHECKED_CAST_TO_EXTERNAL_INTERFACE")
-    private suspend fun fetchVideo(id: Int): Video? = withContext(Dispatchers.Default) {
-        val response = window
-            .fetch("https://my-json-server.typicode.com/kotlin-hands-on/kotlinconf-json/videos/$id")
-            .await()
-        response.json().await() as? Video
+    companion object {
+        private const val VIDEO_COUNT = 30u
     }
 }
 
