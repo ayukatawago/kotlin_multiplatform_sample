@@ -6,15 +6,17 @@ import react.dom.h3
 
 @JsExport
 class App : RComponent<RProps, AppState>() {
-    private val unwatchedVideos = listOf(
-        KotlinVideo(1, "Building and breaking things", "John Doe", "https://youtu.be/PsaFVLr8t4E"),
-        KotlinVideo(2, "The development process", "Jane Smith", "https://youtu.be/PsaFVLr8t4E"),
-        KotlinVideo(3, "The Web 7.0", "Matt Miller", "https://youtu.be/PsaFVLr8t4E")
-    )
+    override fun AppState.init() {
+        unwatchedVideos = listOf(
+            KotlinVideo(1, "Building and breaking things", "John Doe", "https://youtu.be/PsaFVLr8t4E"),
+            KotlinVideo(2, "The development process", "Jane Smith", "https://youtu.be/PsaFVLr8t4E"),
+            KotlinVideo(3, "The Web 7.0", "Matt Miller", "https://youtu.be/PsaFVLr8t4E")
+        )
 
-    private val watchedVideos = listOf(
-        KotlinVideo(4, "Mouseless development", "Tom Jerry", "https://youtu.be/PsaFVLr8t4E")
-    )
+        watchedVideos = listOf(
+            KotlinVideo(4, "Mouseless development", "Tom Jerry", "https://youtu.be/PsaFVLr8t4E")
+        )
+    }
 
     override fun RBuilder.render() {
         val platform = Platform().platform
@@ -26,7 +28,7 @@ class App : RComponent<RProps, AppState>() {
                 +"Videos to watch"
             }
             videoList {
-                videos = unwatchedVideos
+                videos = state.unwatchedVideos
                 selectedVideo = state.currentVideo
                 onSelectVideo = ::setCurrentVideo
             }
@@ -35,9 +37,28 @@ class App : RComponent<RProps, AppState>() {
                 +"Videos watched"
             }
             videoList {
-                videos = watchedVideos
+                videos = state.watchedVideos
                 selectedVideo = state.currentVideo
                 onSelectVideo = ::setCurrentVideo
+            }
+            state.currentVideo?.let {
+                videoPlayer {
+                    video = it
+                    isUnwatchedVideo = it in state.unwatchedVideos
+                    onWatchedButtonPressed = {
+                        if (it in state.unwatchedVideos) {
+                            setState {
+                                unwatchedVideos = unwatchedVideos.minus(it)
+                                watchedVideos = watchedVideos.plus(it)
+                            }
+                        } else {
+                            setState {
+                                unwatchedVideos = unwatchedVideos.plus(it)
+                                watchedVideos = watchedVideos.minus(it)
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -51,4 +72,6 @@ class App : RComponent<RProps, AppState>() {
 
 external interface AppState : RState {
     var currentVideo: Video?
+    var unwatchedVideos: List<Video>
+    var watchedVideos: List<Video>
 }
