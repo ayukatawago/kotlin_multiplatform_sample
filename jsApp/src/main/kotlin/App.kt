@@ -1,4 +1,6 @@
 import com.example.shared.Platform
+import kotlinx.browser.window
+import kotlinx.coroutines.*
 import react.*
 import react.dom.div
 import react.dom.h1
@@ -7,15 +9,16 @@ import react.dom.h3
 @JsExport
 class App : RComponent<RProps, AppState>() {
     override fun AppState.init() {
-        unwatchedVideos = listOf(
-            KotlinVideo(1, "Kotlin Coroutines 1.5", "Anton Arhipov", "https://youtu.be/EVLnWOcR0is"),
-            KotlinVideo(2, "kotlinx.serialization 1.2.0", "Sebastian Aigner", "https://youtu.be/698I_AH8h6s"),
-            KotlinVideo(3, "New Standard Library Features", "Sebastian Aigner", "https://youtu.be/MyTkiT2I6-8")
-        )
+        unwatchedVideos = listOf()
+        watchedVideos = listOf()
 
-        watchedVideos = listOf(
-            KotlinVideo(4, "More About Future Support for Value Classes", "Svetlana Isakova", "https://youtu.be/33JpZZz5MNw")
-        )
+        val mainScope = MainScope()
+        mainScope.launch {
+            val videos = fetchVideos()
+            setState {
+                unwatchedVideos = videos
+            }
+        }
     }
 
     override fun RBuilder.render() {
@@ -67,6 +70,23 @@ class App : RComponent<RProps, AppState>() {
         setState {
             currentVideo = video
         }
+    }
+
+    private suspend fun fetchVideos(): List<Video> = coroutineScope {
+        (1..25).map { id ->
+            async {
+                fetchVideo(id)
+            }
+        }.awaitAll()
+            .filterNotNull()
+    }
+
+    @Suppress("UNCHECKED_CAST_TO_EXTERNAL_INTERFACE")
+    private suspend fun fetchVideo(id: Int): Video? = withContext(Dispatchers.Default) {
+        val response = window
+            .fetch("https://my-json-server.typicode.com/kotlin-hands-on/kotlinconf-json/videos/$id")
+            .await()
+        response.json().await() as? Video
     }
 }
 

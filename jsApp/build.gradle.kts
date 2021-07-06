@@ -13,6 +13,7 @@ repositories {
 dependencies {
     implementation(project(":shared"))
     implementation(kotlin("stdlib-js"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
 
     //React, React DOM + Wrappers
     implementation("org.jetbrains:kotlin-react:17.0.2-pre.154-kotlin-1.5.0")
