@@ -1,0 +1,23 @@
+on:
+  pull_request:
+    branches:
+      - master
+jobs:
+  ktlint:
+    name: ktlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run ktlintCheck
+        run: ./gradlew ktlintCheck
+  android_lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setupjava@v1
+        with:
+          java-version: 1.8
+      - name: Run Android Lint
+        run: ./gradlew lint
