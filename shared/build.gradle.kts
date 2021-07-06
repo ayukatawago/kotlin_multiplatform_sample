@@ -18,6 +18,9 @@ kotlin {
             }
         }
     }
+    js {
+        browser()
+    }
     sourceSets {
         val commonMain by getting
         val commonTest by getting {
@@ -37,6 +40,8 @@ kotlin {
         }
         val iosMain by getting
         val iosTest by getting
+        val jsMain by getting
+        val jsTest by getting
     }
 }
 

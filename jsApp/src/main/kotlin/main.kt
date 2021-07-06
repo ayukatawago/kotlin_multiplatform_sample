@@ -1,5 +1,7 @@
+import com.example.shared.Platform
 import kotlinx.browser.document
 
 fun main() {
-    document.write("Hello, world!")
+    val platform = Platform().platform
+    document.write("Hello, $platform")
 }

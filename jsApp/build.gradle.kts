@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":shared"))
     implementation(kotlin("stdlib-js"))
 }
 
