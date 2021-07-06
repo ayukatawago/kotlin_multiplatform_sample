@@ -5,6 +5,7 @@ plugins {
     kotlin("plugin.serialization")
     id("com.android.library")
     id("kotlin-android-extensions")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 group = "com.example"

@@ -1,5 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.js")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 group = "com.example"
