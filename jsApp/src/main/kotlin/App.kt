@@ -8,13 +8,13 @@ import react.dom.h3
 class App : RComponent<RProps, AppState>() {
     override fun AppState.init() {
         unwatchedVideos = listOf(
-            KotlinVideo(1, "Building and breaking things", "John Doe", "https://youtu.be/PsaFVLr8t4E"),
-            KotlinVideo(2, "The development process", "Jane Smith", "https://youtu.be/PsaFVLr8t4E"),
-            KotlinVideo(3, "The Web 7.0", "Matt Miller", "https://youtu.be/PsaFVLr8t4E")
+            KotlinVideo(1, "Kotlin Coroutines 1.5", "Anton Arhipov", "https://youtu.be/EVLnWOcR0is"),
+            KotlinVideo(2, "kotlinx.serialization 1.2.0", "Sebastian Aigner", "https://youtu.be/698I_AH8h6s"),
+            KotlinVideo(3, "New Standard Library Features", "Sebastian Aigner", "https://youtu.be/MyTkiT2I6-8")
         )
 
         watchedVideos = listOf(
-            KotlinVideo(4, "Mouseless development", "Tom Jerry", "https://youtu.be/PsaFVLr8t4E")
+            KotlinVideo(4, "More About Future Support for Value Classes", "Svetlana Isakova", "https://youtu.be/33JpZZz5MNw")
         )
     }
 

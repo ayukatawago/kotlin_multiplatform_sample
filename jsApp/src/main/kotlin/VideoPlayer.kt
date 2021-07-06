@@ -2,7 +2,6 @@ import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.h3
-import react.dom.img
 import styled.css
 import styled.styledButton
 import styled.styledDiv
@@ -19,10 +18,16 @@ class VideoPlayer : RComponent<VideoPlayerProps, RState>() {
             h3 {
                 +"${props.video.speaker}: ${props.video.title}"
             }
-            img {
-                attrs {
-                    src = "https://via.placeholder.com/640x360.png?text=Video+Player+Placeholder"
-                }
+        }
+        styledDiv {
+            css {
+                position = Position.absolute
+                top = 80.px
+                right = 10.px
+                width = 1000.px
+            }
+            reactPlayer {
+                attrs.url = props.video.videoUrl
             }
         }
         styledButton {
