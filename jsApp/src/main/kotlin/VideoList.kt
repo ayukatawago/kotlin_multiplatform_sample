@@ -1,21 +1,22 @@
-import kotlinx.browser.window
 import kotlinx.html.js.onClickFunction
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
+import react.*
 import react.dom.p
 
 @JsExport
-class VideoList : RComponent<VideoListProps, RState>() {
+class VideoList : RComponent<VideoListProps, VideoListState>() {
     override fun RBuilder.render() {
         props.videos.forEach { video ->
             p {
                 key = video.id.toString()
                 attrs {
                     onClickFunction = {
-                        window.alert("Clicked $video")
+                        setState {
+                            selectedVideo = video
+                        }
                     }
+                }
+                if (video == state.selectedVideo) {
+                    +"▶ "
                 }
                 +"${video.speaker}: ${video.title}"
             }
@@ -25,4 +26,8 @@ class VideoList : RComponent<VideoListProps, RState>() {
 
 external interface VideoListProps : RProps {
     var videos: List<Video>
+}
+
+external interface VideoListState: RState {
+    var selectedVideo: Video?
 }
