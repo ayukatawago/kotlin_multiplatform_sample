@@ -62,6 +62,10 @@ android {
         minSdkVersion(24)
         targetSdkVersion(29)
     }
+
+    lintOptions {
+        isWarningsAsErrors = true
+    }
 }
 
 val packForXcode by tasks.creating(Sync::class) {

@@ -41,4 +41,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    lintOptions {
+        isWarningsAsErrors = true
+    }
 }
