@@ -14,37 +14,65 @@ class VideoPlayer : RComponent<VideoPlayerProps, RState>() {
                 position = Position.absolute
                 top = 10.px
                 right = 10.px
+                width = 1000.px
             }
             h3 {
                 +"${props.video.speaker}: ${props.video.title}"
             }
-        }
-        styledDiv {
-            css {
-                position = Position.absolute
-                top = 80.px
-                right = 10.px
-                width = 1000.px
+            styledButton {
+                css {
+                    display = Display.block
+                    backgroundColor = if (props.isUnwatchedVideo) Color.lightGreen else Color.red
+                }
+                attrs {
+                    onClickFunction = {
+                        props.onWatchedButtonPressed(props.video)
+                    }
+                }
+                if (props.isUnwatchedVideo) {
+                    +"Mark as watched"
+                } else {
+                    +"Mark as unwatched"
+                }
+            }
+            styledDiv {
+                css {
+                    display = Display.flex
+                    marginBottom = 10.px
+                }
+                emailShareButton {
+                    attrs.url = props.video.videoUrl
+                    emailIcon {
+                        attrs.size = 32
+                        attrs.round = true
+                    }
+                }
+
+                lineShareButton {
+                    attrs.url = props.video.videoUrl
+                    lineIcon {
+                        attrs.size = 32
+                        attrs.round = true
+                    }
+                }
+
+                twitterShareButton {
+                    attrs.url = props.video.videoUrl
+                    twitterIcon {
+                        attrs.size = 32
+                        attrs.round = true
+                    }
+                }
+                facebookShareButton {
+                    attrs.url = props.video.videoUrl
+                    facebookIcon {
+                        attrs.size = 32
+                        attrs.round = true
+                    }
+                }
             }
             reactPlayer {
                 attrs.url = props.video.videoUrl
-            }
-        }
-        styledButton {
-            css {
-                display = Display.block
-                backgroundColor = if(props.isUnwatchedVideo) Color.lightGreen else Color.red
-            }
-            attrs {
-                onClickFunction = {
-                    props.onWatchedButtonPressed(props.video)
-                }
-            }
-            if(props.isUnwatchedVideo) {
-                +"Mark as watched"
-            }
-            else {
-                +"Mark as unwatched"
             }
         }
     }
