@@ -53,3 +53,8 @@ kotlin {
         binaries.executable()
     }
 }
+
+// Heroku Deployment
+tasks.register("stage") {
+    dependsOn("build")
+}
