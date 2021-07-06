@@ -1,6 +1,10 @@
 import com.example.shared.video.Video
 import kotlinx.html.js.onClickFunction
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.ReactElement
 import react.dom.p
 
 @JsExport

@@ -1,12 +1,17 @@
 import com.example.shared.Platform
 import com.example.shared.video.Video
 import com.example.shared.video.VideoRepository
-import io.ktor.utils.io.errors.*
-import kotlinx.coroutines.*
-import react.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import react.dom.div
 import react.dom.h1
 import react.dom.h3
+import react.setState
 
 @JsExport
 class App : RComponent<RProps, AppState>() {
