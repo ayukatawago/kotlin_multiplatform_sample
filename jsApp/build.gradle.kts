@@ -19,6 +19,10 @@ dependencies {
     implementation("org.jetbrains:kotlin-react-dom:17.0.2-pre.154-kotlin-1.5.0")
     implementation(npm("react", "17.0.2"))
     implementation(npm("react-dom", "17.0.2"))
+
+    //Kotlin styled
+    implementation("org.jetbrains:kotlin-styled:5.2.1-pre.148-kotlin-1.4.21")
+    implementation(npm("styled-components", "~5.2.1"))
 }
 
 kotlin {

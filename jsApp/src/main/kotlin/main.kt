@@ -1,6 +1,9 @@
 import com.example.shared.Platform
 import kotlinx.browser.document
+import kotlinx.css.*
 import react.dom.*
+import styled.css
+import styled.styledDiv
 
 fun main() {
     val platform = Platform().platform
@@ -13,13 +16,23 @@ fun main() {
         h1 {
             +"Hello, $platform"
         }
-        div {
+        styledDiv {
+            css {
+                position = Position.absolute
+                top = 60.px
+                left = 20.px
+            }
             h3 {
                 +"Video List"
             }
             videoList.forEach { video ->
                 p {
                     +"${video.speaker}: ${video.title}"
+                }
+            }
+            img {
+                attrs {
+                    src = "https://via.placeholder.com/640x360.png?text=Video+Player+Placeholder"
                 }
             }
         }
