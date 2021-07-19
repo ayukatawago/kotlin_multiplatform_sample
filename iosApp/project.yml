@@ -1,0 +1,74 @@
+name: iosApp
+
+options:
+  bundleIdPrefix:
+  deploymentTarget:
+    iOS: 13.2
+  xcodeVersion: "11.4"
+
+settings:
+  base:
+    FRAMEWORK_SEARCH_PATHS: $(SRCROOT)/../shared/build/xcode-frameworks
+  config:
+    debug:
+        DEBUG_INFORMATION_FORMAT: "dwarf-with-dsym"
+
+targets:
+  iosApp:
+    type: application
+    platform: iOS
+    sources:
+      - iosApp
+    settings:
+      base:
+        INFOPLIST_FILE: iosApp/Info.plist
+    dependencies:
+      - framework: ../shared/build/xcode-frameworks/shared.framework
+    preBuildScripts:
+      - path: /bin/sh
+        script: |
+          cd "$SRCROOT/.."
+          XCODE_ENV=$SRCROOT/.xcode-env
+          if [ -f $XCODE_ENV ]; then
+            source $XCODE_ENV
+          fi
+          ./gradlew :shared:packForXCode -PXCODE_CONFIGURATION=${CONFIGURATION}
+  iosAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - iosAppTests
+    settings:
+      base:
+        INFOPLIST_FILE: iosAppTests/Info.plist
+    dependencies:
+      - target: iosApp
+  iosAppUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - iosAppUITests
+    settings:
+      base:
+        INFOPLIST_FILE: iosAppUITests/Info.plist
+    dependencies:
+      - target: iosApp
+
+schemes:
+  iosApp:
+    build:
+      targets:
+        iosApp: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - name: iosAppTests
+        - name: iosAppUITests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
