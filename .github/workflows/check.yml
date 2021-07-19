@@ -56,5 +56,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Run Xcodegen
+        uses: xavierLowmiller/xcodegen-action@1.1.2
+        with:
+          spec: iosApp/project.yml
+          version: '2.24.0'
       - name: Run xcodebuild
         run: xcodebuild -workspace iosApp/iosApp.xcodeproj/project.xcworkspace/ -scheme iosApp -destination 'name=iPhone 8' build
